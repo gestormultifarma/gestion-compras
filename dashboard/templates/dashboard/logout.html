@@ -1,0 +1,11 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Sesión cerrada{% endblock %}
+{% block header %}Gestión de Compras | Multifarma{% endblock %}
+
+{% block content %}
+<div class="logout-message">
+  <h2>🔒 Has cerrado sesión</h2>
+  <p>Tu sesión ha sido cerrada exitosamente.</p>
+  <p><a href="{% url 'login' %}">Haz clic aquí para iniciar sesión nuevamente</a></p>
+</div>
+{% endblock %}

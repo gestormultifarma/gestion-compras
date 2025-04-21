@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Dashboard{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'dashboard/favicon.ico' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <h1>{% block header %}Mi Dashboard{% endblock %}</h1>
+    </div>
+    <div class="header-right">
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Gestión de Compras | Desarrollado por Alejandro Fernández Herrera | (+57) 3214649277</p>
+    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">
+      El uso, distribución o modificación de este sistema está autorizado únicamente por Multifarma y el desarrollador responsable.
+    </p>
+  </footer>
+
+</body>
+</html>
