@@ -1,6 +1,8 @@
+# analysis\etl_runner_ventas.py
+
 import os
-from analysis.extractor import extraer_archivos
-from analysis.transformer import transformar_archivo
+from analysis.extractor_ventas import extraer_archivos
+from analysis.transformer_ventas import transformar_archivo
 
 def run_etl():
     directorio_raiz = r"E:\desarrollo\gestionCompras\data\input\ventas"
