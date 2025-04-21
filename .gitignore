@@ -7,3 +7,9 @@ db.sqlite3
 .vscode/
 *.DS_Store
 staticfiles/
+data/input/*
+!.gitkeep
+*.csv
+*.xlsx
+*.xls
+*.json
