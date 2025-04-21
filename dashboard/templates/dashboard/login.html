@@ -1,16 +1,34 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load form_filters %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Inicio de sesión{% endblock %}
 {% block header %}Gestión de Compras | Multifarma{% endblock %}
 
 {% block content %}
 <div class="login-container">
   <h2>Inicio de Sesión</h2>
+
+  {% if form.errors %}
+    <div class="form-errors">
+      Por favor verifica tu nombre de usuario y contraseña.
+    </div>
+  {% endif %}
+
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ingresar</button>
+
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}">Usuario</label>
+      {{ form.username|add_class:"login-input" }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.password.id_for_label }}">Contraseña</label>
+      {{ form.password|add_class:"login-input" }}
+    </div>
+
+    <button type="submit" class="btn-submit">Ingresar</button>
   </form>
 </div>
 {% endblock %}
