@@ -1,6 +1,11 @@
+# analysis\transformer\transformer_base.py
+
 import pandas as pd
 
 class BaseTransformer:
+
+    valores_invalidos = ['#¡REF!', '#REF!', '#N/D', '#DIV/0!', '#VALUE!', 'N/A', 'NA', 'null', 'None']
+
     def __init__(self, path):
         self.path = path
         self.df = None
@@ -34,3 +39,21 @@ class BaseTransformer:
 
     def transformar(self):
         raise NotImplementedError("Debes implementar el método 'transformar' en la subclase.")
+    
+    def limpiar_valores_invalidos(self, df):
+        df_reemplazado = df.copy()
+        reemplazos_por_columna = {}
+
+        for col in df_reemplazado.columns:
+            conteo_original = df_reemplazado[col].isin(self.valores_invalidos).sum()
+            if conteo_original > 0:
+                reemplazos_por_columna[col] = conteo_original
+                df_reemplazado[col] = df_reemplazado[col].replace(self.valores_invalidos, pd.NA)
+
+        if reemplazos_por_columna:
+            print("🧽 Limpieza de valores inválidos:")
+            for col, count in reemplazos_por_columna.items():
+                print(f"   - {col}: {count} valores reemplazados")
+
+        return df_reemplazado
+

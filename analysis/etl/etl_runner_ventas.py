@@ -1,9 +1,14 @@
 # analysis\etl\etl_runner_ventas.py
 
 import os
+import warnings
+
 from analysis.extractor.extractor_ventas import ExtractorVentas
 from analysis.transformer.transformer_ventas import VentasTransformer
 from analysis.etl.etl_base import BaseETLRunner
+
+warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
+
 
 def generar_clave_ventas(archivo):
     nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')

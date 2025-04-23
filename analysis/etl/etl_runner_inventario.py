@@ -2,11 +2,13 @@
 
 import os
 import warnings
+
 from analysis.extractor.extractor_inventario import ExtractorInventario
 from analysis.transformer.transformer_inventario import TransformadorInventario
 from analysis.etl.etl_base import BaseETLRunner
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
+
 
 def generar_clave_inventario(archivo):
     nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')

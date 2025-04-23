@@ -29,12 +29,9 @@ class VentasTransformer(BaseTransformer):
     def transformar(self):
     # Leer el archivo usando la segunda fila como encabezado
         self.df = pd.read_excel(self.path, header=1, engine="openpyxl")
-
-        # Ver DataFrame antes de estandarizar (para debug)
-        # print(f"\n📊 Vista previa del archivo: {self.path}")
-        # print(self.df.head(3))  # Muestra las primeras 3 filas para revisión
-
-        # Aplicar transformación
+        self.df = self.limpiar_valores_invalidos(self.df)
         self.estandarizar_columnas(self.columnas_estandarizadas)
         self.validar_columnas(self.columnas_esperadas)
+        # print(f"\n📦 Vista previa final del archivo: {self.path}")
+        # print(self.df.tail(5))
         return self.df
