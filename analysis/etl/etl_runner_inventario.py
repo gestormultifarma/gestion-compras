@@ -1,9 +1,9 @@
-# analysis\etl_runner_inventario.py
+# analysis\etl\etl_runner_inventario.py
 
 import os
 import warnings
-from analysis.extractor_inventario import extraer_archivos_inventario
-from analysis.transformer_inventario import transformar_inventario
+from analysis.extractor.extractor_inventario import extraer_archivos_inventario
+from analysis.transformer.transformer_inventario import transformar_inventario
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 

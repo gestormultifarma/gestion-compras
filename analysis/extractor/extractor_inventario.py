@@ -1,4 +1,4 @@
-# analysis\extractor_inventario.py
+# analysis\extractor\extractor_inventario.py
 
 import os
 

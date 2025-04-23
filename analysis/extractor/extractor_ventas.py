@@ -1,4 +1,4 @@
-# analysis/extractor_ventas.py
+# analysis/extractor/extractor_ventas.py
 
 import os
 
