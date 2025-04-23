@@ -1,41 +1,32 @@
 # analysis\etl\etl_runner_ventas.py
 
 import os
-from analysis.extractor.extractor_ventas import extraer_archivos
-from analysis.transformer.transformer_ventas import transformar_archivo
+from analysis.extractor.extractor_ventas import ExtractorVentas
+from analysis.transformer.transformer_ventas import VentasTransformer
+from analysis.etl.etl_base import BaseETLRunner
 
-def run_etl():
-    directorio_raiz = r"E:\desarrollo\gestionCompras\data\input\ventas"
-    dataframes = {}
+def generar_clave_ventas(archivo):
+    nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
+    nombre_punto, codigo, mes = nombre_archivo.rsplit(' ', 2)
+    mes = mes.replace('-', '')
+    return f"{codigo}_{nombre_punto}_{mes}"
 
-    print(f"Iniciando ETL desde: {directorio_raiz}")
-    archivos = extraer_archivos(directorio_raiz)
-    print(f"{len(archivos)} archivos encontrados para procesar.\n")
+def transformador(path):
+    instancia = VentasTransformer(path)
+    return instancia.transformar()
 
-    for archivo in archivos:
-        nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
-        
-        try:
-            nombre_punto, codigo, mes = nombre_archivo.rsplit(' ', 2)
-            mes = mes.replace('-', '')  # elimina el guion y deja solo el número
-            clave = f"{codigo}_{nombre_punto}_{mes}"  # sin 'mes' como prefijo
-        except ValueError:
-            print(f"[❌ ERROR] Nombre de archivo inválido: {nombre_archivo}")
-            continue
-
-        try:
-            df_limpio = transformar_archivo(archivo)
-            dataframes[clave] = df_limpio
-            print(f"[✅ OK] {clave} procesado")
-        except Exception as e:
-            print(f"[⚠️ ERROR] Falló la transformación de {archivo}: {e}")
-
-    print("\n🎯 ETL Finalizado.")
-    print(f"✅ Total de archivos procesados exitosamente: {len(dataframes)}")
-    print(f"📁 Claves disponibles: {list(dataframes.keys())}")
-
-    return dataframes
-
-# Permite ejecutar desde terminal con: python -m analysis.etl_runner
 if __name__ == '__main__':
-    run_etl()
+    directorio = r"E:\desarrollo\gestionCompras\data\input\ventas"
+    extractor = ExtractorVentas(directorio)
+
+    runner = BaseETLRunner(
+        directorio_raiz=directorio,
+        extractor_func=extractor.extraer,
+        transformer_func=transformador,
+        clave_func=generar_clave_ventas,
+        nombre_etl="ETL Ventas"
+    )
+    runner.run()
+
+
+# prueba funcional: python -m analysis.etl.etl_runner_ventas

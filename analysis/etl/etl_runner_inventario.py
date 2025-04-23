@@ -1,43 +1,32 @@
-# analysis\etl\etl_runner_inventario.py
+# analysis/etl/etl_runner_inventario.py
 
 import os
 import warnings
-from analysis.extractor.extractor_inventario import extraer_archivos_inventario
-from analysis.transformer.transformer_inventario import transformar_inventario
+from analysis.extractor.extractor_inventario import ExtractorInventario
+from analysis.transformer.transformer_inventario import TransformadorInventario
+from analysis.etl.etl_base import BaseETLRunner
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 
-def run_etl_inventario():
-    directorio_raiz = r"E:\desarrollo\gestionCompras\data\input\inventarios"
-    dataframes = {}
+def generar_clave_inventario(archivo):
+    nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
+    nombre_punto, codigo, *_ = nombre_archivo.rsplit(' ', 2)
+    return f"{codigo}_{nombre_punto}"
 
-    print(f"Iniciando ETL Inventarios desde: {directorio_raiz}")
-    archivos = extraer_archivos_inventario(directorio_raiz)
-    print(f"{len(archivos)} archivos encontrados para procesar.\n")
+def transformador(path):
+    return TransformadorInventario(path).transformar()
 
-    for archivo in archivos:
-        nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
-
-        try:
-            nombre_punto, codigo, *_ = nombre_archivo.rsplit(' ', 2)
-            clave = f"{codigo}_{nombre_punto}"
-        except ValueError:
-            print(f"[❌ ERROR] Nombre de archivo inválido: {nombre_archivo}")
-            continue
-
-        try:
-            df_limpio = transformar_inventario(archivo)
-            dataframes[clave] = df_limpio
-            print(f"[✅ OK] {clave} procesado")
-        except Exception as e:
-            print(f"[⚠️ ERROR] Falló la transformación de {archivo}: {e}")
-
-    print("\n🎯 ETL Inventarios Finalizado.")
-    print(f"✅ Total de archivos procesados exitosamente: {len(dataframes)}")
-    print(f"📁 Claves disponibles: {list(dataframes.keys())}")
-
-    return dataframes
-
-# Permite ejecutar desde terminal con: python -m analysis.etl_runner_inventario
 if __name__ == '__main__':
-    run_etl_inventario()
+    directorio = r"E:\desarrollo\gestionCompras\data\input\inventarios"
+    extractor = ExtractorInventario(directorio)
+
+    runner = BaseETLRunner(
+        directorio_raiz=directorio,
+        extractor_func=extractor.extraer,
+        transformer_func=transformador,
+        clave_func=generar_clave_inventario,
+        nombre_etl="ETL Inventarios"
+    )
+    runner.run()
+
+#prueba funcional: python -m analysis.etl.etl_runner_inventario
