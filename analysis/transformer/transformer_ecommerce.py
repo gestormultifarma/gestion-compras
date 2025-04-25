@@ -40,6 +40,6 @@ class EcommerceTransformer(BaseTransformer):
         self.df = self.limpiar_valores_invalidos(self.df)
         self.estandarizar_columnas(self.columnas_estandarizadas)
         self.validar_columnas(self.columnas_esperadas)
-        print(f"\n📦 Vista previa final del archivo: {self.path}")
-        print(self.df.tail(5))
+        # print(f"\n📦 Vista previa final del archivo: {self.path}")
+        # print(self.df.tail(5))
         return self.df

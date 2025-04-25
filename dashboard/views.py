@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
 from analysis.actualizador import procesar_archivos_excel  # TODO: Cambiar a la función correcta
-from analysis.etl import procesar_archivo_excel
+from analysis.etl_prueba import procesar_archivo_excel
 import os
 
 @login_required

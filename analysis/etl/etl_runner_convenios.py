@@ -1,5 +1,6 @@
 # analysis/etl/etl_runner_convenios.py
 
+import os
 import warnings
 
 from analysis.extractor.extractor_convenios import ExtractorConvenios
@@ -10,7 +11,9 @@ warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 
 
 def generar_clave_convenio(archivo):
-    return "convenios"
+    nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
+    return nombre_archivo
+    
 
 if __name__ == "__main__":
     directorio = r"E:\desarrollo\gestionCompras\data\input\convenios"

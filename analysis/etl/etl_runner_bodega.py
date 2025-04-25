@@ -1,5 +1,6 @@
 # analysis/etl/etl_runner_bodega.py
 
+import os
 import warnings
 
 from analysis.extractor.extractor_bodega import ExtractorBodega
@@ -10,7 +11,9 @@ warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 
 
 def generar_clave_bodega(archivo):
-    return "solo_bodega"
+    nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
+    return nombre_archivo
+    
 
 def transformador(path):
     return BodegaTransformer(path).transformar()
