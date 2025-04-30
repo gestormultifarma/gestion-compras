@@ -1,31 +1,68 @@
-# analysis\etl\etl_base.py
+from datetime import datetime
+from pathlib import Path
+from sqlalchemy import create_engine, text
+from utils.db_connection import get_mysql_url  
 
-import os
 
 class BaseETLRunner:
-    def __init__(self, directorio_raiz, extractor_func, transformer_func, clave_func=None, nombre_etl="ETL"):
+    def __init__(self, directorio_raiz, extractor_func, transformer_func, clave_func, nombre_etl, logger=None, loader=None):
         self.directorio_raiz = directorio_raiz
         self.extractor_func = extractor_func
         self.transformer_func = transformer_func
         self.clave_func = clave_func
         self.nombre_etl = nombre_etl
-        self.dataframes = {}
+        self.logger = logger
+        self.loader = loader
 
     def run(self):
-        print(f"Iniciando {self.nombre_etl} desde: {self.directorio_raiz}")
         archivos = self.extractor_func()
-        print(f"{len(archivos)} archivos encontrados para procesar.\n")
+        if self.logger:
+            self.logger.info(f"🔍 Archivos encontrados: {len(archivos)}")
 
         for archivo in archivos:
             try:
-                clave = self.clave_func(archivo) if self.clave_func else os.path.basename(archivo)
-                df = self.transformer_func(archivo)
-                self.dataframes[clave] = df
-                print(f"[✅ OK] {clave} procesado")
-            except Exception as e:
-                print(f"[⚠️ ERROR] Falló la transformación de {archivo}: {e}")
+                clave = self.clave_func(archivo)
+                if self.logger:
+                    self.logger.info(f"📄 Procesando archivo: {archivo} (clave: {clave})")
 
-        print(f"\n🎯 {self.nombre_etl} Finalizado.")
-        print(f"✅ Total de archivos procesados exitosamente: {len(self.dataframes)}")
-        print(f"📁 Claves disponibles: {list(self.dataframes.keys())}")
-        return self.dataframes
+                df = self.transformer_func(archivo)
+
+                if df is not None and not df.empty:
+                    # --- Guardar histórico como CSV local ---
+                    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                    nombre_archivo_csv = f"{clave}_{timestamp}.csv"
+                    ruta_historico = Path(f"E:/desarrollo/gestionCompras/historico/{self.nombre_etl}")
+                    ruta_historico.mkdir(parents=True, exist_ok=True)
+                    df.to_csv(ruta_historico / nombre_archivo_csv, index=False, encoding='utf-8-sig')
+
+                    if self.logger:
+                        self.logger.info(f"🗂️ Backup CSV guardado en: {ruta_historico / nombre_archivo_csv}")
+                        self.logger.info(f"📊 DataFrame generado. Registros: {len(df)}")
+
+                    # --- Cargar a MySQL reemplazando la tabla ---
+                    if self.loader:
+                        self.loader.cargar_dataframe(df, clave)
+                        self.validar_carga(clave)  # ✅ Validación después de cargar
+
+                else:
+                    if self.logger:
+                        self.logger.error(f"⚠️ DataFrame vacío o nulo para archivo: {archivo}")
+
+            except Exception as e:
+                if self.logger:
+                    self.logger.error(f"💥 Error al procesar archivo '{archivo}': {e}")
+
+    def validar_carga(self, nombre_tabla):
+        try:
+            engine = create_engine(get_mysql_url("gestion_compras"))
+            with engine.connect() as conn:
+                query = text(f"SELECT COUNT(*) FROM `{nombre_tabla}`")
+                resultado = conn.execute(query).scalar()
+
+                if self.logger:
+                    self.logger.info(f"✅ Validación de carga: {resultado} registros encontrados en '{nombre_tabla}'. Carga confirmada en la base de datos.")
+
+        except Exception as e:
+            if self.logger:
+                self.logger.error(f"❌ Error al validar la tabla '{nombre_tabla}': {e}")
+

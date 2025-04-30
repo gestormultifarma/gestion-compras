@@ -5,12 +5,11 @@ from analysis.transformer.transformer_base import BaseTransformer
 
 class ExhibicionesTransformer(BaseTransformer):
     columnas_estandarizadas = {
-        "Codigo": "Codigo",
-        "Punto-de-Venta": "Punto-de-Venta",
-        "Min-Exhibicion": "Min-Exhibicion",
-        "Max-Exhibicion": "Max-Exhibicion"
+        "Codigo": "codigo",
+        "Punto-de-Venta": "punto_de_venta",
+        "Min-Exhibicion": "min_exhibicion",
+        "Max-Exhibicion": "max_exhibicion"
     }
-
     columnas_esperadas = list(columnas_estandarizadas.values())
 
     def transformar(self):

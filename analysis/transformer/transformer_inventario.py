@@ -5,21 +5,21 @@ import pandas as pd
 
 class TransformadorInventario(BaseTransformer):
     columnas_estandarizadas = {
-        "Grupo": "Grupo",
-        "Cod Producto": "Codigo",
-        "Nombre": "Nombre",
-        "Inventario Caja": "Inventario-Caja",
-        "Inventario Blister": "Inventario-Blister",
-        "Costo Unidad": "Costo-Unidad",
-        "Costo Blister": "Costo-Blister",
-        "Costo Caja": "Costo-Caja",
-        "% Iva": "%-Iva",
-        "Inventario Unidad": "Inventario-Unidad",
-        "Costo Total": "Costo-Total",
-        "Costo Total Iva": "Costo-Total-Iva",
-        "Venta Total": "Venta-Total",
-        "Ibua": "Ibua",
-        "Icui": "Icui"
+        "Grupo": "grupo",
+        "Cod Producto": "codigo",
+        "Nombre": "nombre",
+        "Inventario Caja": "inventario_caja",
+        "Inventario Blister": "inventario_blister",
+        "Costo Unidad": "costo_unidad",
+        "Costo Blister": "costo_blister",
+        "Costo Caja": "costo_caja",
+        "% Iva": "porcentaje_iva",
+        "Inventario Unidad": "inventario_unidad",
+        "Costo Total": "costo_total",
+        "Costo Total Iva": "costo_total_iva",
+        "Venta Total": "venta_total",
+        "Ibua": "ibua",
+        "Icui": "icui"
     }
 
     columnas_esperadas = list(columnas_estandarizadas.values())

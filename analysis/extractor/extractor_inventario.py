@@ -7,6 +7,8 @@ class ExtractorInventario(ExtractorBase):
     def extraer(self):
         archivos = []
         for archivo in os.listdir(self.directorio_raiz):
-            if self.es_archivo_valido(archivo) and 'Costeados' in archivo.lower():
-                archivos.append(os.path.join(self.directorio_raiz, archivo))
+            if self.es_archivo_valido(archivo) and 'actuales costeados' in archivo.lower():
+                ruta_completa = os.path.join(self.directorio_raiz, archivo)
+                archivos.append(ruta_completa)
         return archivos
+

@@ -6,22 +6,22 @@ import pandas as pd
 
 class VentasTransformer(BaseTransformer):
     columnas_estandarizadas = {
-        "Codigo": "Codigo",
-        "Nombre": "Nombre",
-        "Sugerido": "Sugerido",
-        "Laboratorio": "Laboratorio",
-        "Caja": "Contenido-Caja",
-        "Blister": "Contenido-Blister",
-        "Unidad": "Contenido-Unidad",
-        "Caja.1": "Inventario-Caja",
-        "Blister.1": "Inventario-Blister",
-        "Unidad.1": "Inventario-Unidad",
-        "UltimaCompra": "Ultima-Compra",
-        "Caja.2": "Venta-Caja",
-        "Blister.2": "Venta-Blister",
-        "Unidad.2": "Venta-Unidad",
-        "Costo Unitario": "Costo-Unitario",
-        "Precio Venta Contado": "Precio-Venta-Contado"
+        "Codigo": "codigo",
+        "Nombre": "nombre",
+        "Sugerido": "sugerido",
+        "Laboratorio": "laboratorio",
+        "Caja": "contenido_caja",
+        "Blister": "contenido_blister",
+        "Unidad": "contenido_unidad",
+        "Caja.1": "inventario_caja",
+        "Blister.1": "inventario_blister",
+        "Unidad.1": "inventario_unidad",
+        "UltimaCompra": "ultima_compra",
+        "Caja.2": "venta_caja",
+        "Blister.2": "venta_blister",
+        "Unidad.2": "venta_unidad",
+        "Costo Unitario": "costo_unitario",
+        "Precio Venta Contado": "precio_venta_contado"
     }
 
     columnas_esperadas = list(columnas_estandarizadas.values())

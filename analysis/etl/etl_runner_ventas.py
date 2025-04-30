@@ -6,6 +6,7 @@ import warnings
 from analysis.extractor.extractor_ventas import ExtractorVentas
 from analysis.transformer.transformer_ventas import VentasTransformer
 from analysis.etl.etl_base import BaseETLRunner
+from utils.logger_etl import LoggerETL
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 
@@ -16,20 +17,24 @@ def generar_clave_ventas(archivo):
     mes = mes.replace('-', '')
     return f"{codigo}_{nombre_punto}_{mes}"
 
+
 def transformador(path):
     instancia = VentasTransformer(path)
     return instancia.transformar()
 
+
 if __name__ == '__main__':
     directorio = r"E:\desarrollo\gestionCompras\data\input\ventas"
     extractor = ExtractorVentas(directorio)
+    logger = LoggerETL("ETL Ventas")
 
     runner = BaseETLRunner(
         directorio_raiz=directorio,
         extractor_func=extractor.extraer,
         transformer_func=transformador,
         clave_func=generar_clave_ventas,
-        nombre_etl="ETL Ventas"
+        nombre_etl="ETL Ventas",
+        logger=logger
     )
     runner.run()
 

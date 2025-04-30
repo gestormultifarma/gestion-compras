@@ -7,6 +7,7 @@ class ExtractorEcommerce(ExtractorBase):
     def extraer(self):
         archivos = []
         for archivo in os.listdir(self.directorio_raiz):
-            if self.es_archivo_valido(archivo) and "maestra-ecommerce" in archivo.lower():
-                archivos.append(os.path.join(self.directorio_raiz, archivo))
+            if self.es_archivo_valido(archivo) and "maestra_ecommerce" in archivo.lower():
+                ruta_compeleta = os.path.join(self.directorio_raiz, archivo)
+                archivos.append(ruta_compeleta)
         return archivos

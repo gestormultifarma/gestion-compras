@@ -35,7 +35,7 @@ class BaseTransformer:
         if faltantes:
             raise ValueError(f"❌ Faltan columnas: {faltantes}")
         if extras:
-            print(f"ℹ️ Columnas adicionales no mapeadas: {extras}")
+            print(f"ℹ️  Columnas adicionales no mapeadas: {extras}")
 
     def transformar(self):
         raise NotImplementedError("Debes implementar el método 'transformar' en la subclase.")

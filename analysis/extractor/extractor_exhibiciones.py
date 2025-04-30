@@ -8,5 +8,6 @@ class ExtractorExhibiciones(ExtractorBase):
         archivos = []
         for archivo in os.listdir(self.directorio_raiz):
             if self.es_archivo_valido(archivo) and "exhibiciones" in archivo.lower():
-                archivos.append(os.path.join(self.directorio_raiz, archivo))
-        return archivos
+                ruta_completa = os.path.join(self.directorio_raiz, archivo)
+                archivos.append(ruta_completa)
+                return archivos
