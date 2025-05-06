@@ -23,7 +23,7 @@ class TransformadorTemporales(BaseTransformer):
 
         # Calcular columna "Dias-Restantes"
         fecha_actual = datetime.now().date()
-        self.df["Dias-Restantes"] = self.df["Fecha-Final"].apply(lambda fecha: (fecha.date() - fecha_actual).days if pd.notnull(fecha) else None)
+        self.df["dias_restantes"] = self.df["fecha_final"].apply(lambda fecha: (fecha.date() - fecha_actual).days if pd.notnull(fecha) else None)
 
         # print(f"\n📦 Vista previa final del archivo: {self.path}")
         # print(self.df.tail(5))

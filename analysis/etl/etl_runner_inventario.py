@@ -6,6 +6,8 @@ import warnings
 from analysis.extractor.extractor_inventario import ExtractorInventario
 from analysis.transformer.transformer_inventario import TransformadorInventario
 from analysis.etl.etl_base import BaseETLRunner
+from analysis.loader.loader_base import BaseLoader
+from analysis.loader.loader_inventario import LoaderInventario
 from utils.logger_etl import LoggerETL
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
@@ -14,7 +16,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 def generar_clave_inventario(archivo):
     nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
     nombre_punto, codigo, *_ = nombre_archivo.rsplit(' ', 2)
-    return f"{codigo}_{nombre_punto}"
+    return f"stg_{nombre_punto}_{codigo}"
 
 
 def transformador(path):
@@ -24,6 +26,7 @@ if __name__ == '__main__':
     directorio = r"E:\desarrollo\gestionCompras\data\input\inventarios"
     extractor = ExtractorInventario(directorio)
     logger = LoggerETL("ETL Inventarios")
+    loader = BaseLoader(db_name="gestion_compras")
 
     runner = BaseETLRunner(
         directorio_raiz=directorio,
@@ -31,7 +34,8 @@ if __name__ == '__main__':
         transformer_func=transformador,
         clave_func=generar_clave_inventario,
         nombre_etl="ETL Inventarios",
-        logger=logger
+        logger=logger,
+        loader = LoaderInventario(logger=logger)
     )
     runner.run()
 

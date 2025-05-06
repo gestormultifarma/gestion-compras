@@ -11,4 +11,3 @@ class ExtractorBodega(ExtractorBase):
                 ruta_completa = os.path.join(self.directorio_raiz, archivo)
                 archivos.append(ruta_completa)
         return archivos
-

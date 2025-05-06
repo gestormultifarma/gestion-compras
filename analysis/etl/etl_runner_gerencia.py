@@ -6,6 +6,8 @@ import warnings
 from analysis.extractor.extractor_gerencia import ExtractorGerencia
 from analysis.transformer.transformer_gerencia import TransformadorGerencia
 from analysis.etl.etl_base import BaseETLRunner
+from analysis.loader.loader_base import BaseLoader
+from analysis.loader.loader_gerencia import LoaderGerencia
 from utils.logger_etl import LoggerETL
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
@@ -13,7 +15,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 
 def generar_clave_gerencia(archivo):
     nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
-    return nombre_archivo
+    return f"stg_{nombre_archivo}"
     
 
 def transformador(path):
@@ -24,6 +26,7 @@ if __name__ == "__main__":
     directorio = r"E:\desarrollo\gestionCompras\data\input\gerencia"
     extractor = ExtractorGerencia(directorio)
     logger = LoggerETL("ETL Gerencia")
+    loader = BaseLoader(db_name="gestion_compras")
 
     runner = BaseETLRunner(
         directorio_raiz=directorio,
@@ -31,7 +34,8 @@ if __name__ == "__main__":
         transformer_func=transformador,
         clave_func=generar_clave_gerencia,
         nombre_etl="ETL Gerencia",
-        logger=logger
+        logger=logger,
+        loader = LoaderGerencia(logger=logger)
     )
     runner.run()
 

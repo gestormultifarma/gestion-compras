@@ -16,30 +16,46 @@ class TransformadorOferta(BaseTransformer):
         "$ Venta Real": "costo_caja_real"
     }
 
-    columnas_esperadas = list(columnas_estandarizadas.values()) + ["Precio-Efectivo", "Descuento"]
+    columnas_esperadas = list(columnas_estandarizadas.values()) + ["precio_efectivo", "descuento"]
 
     def transformar(self):
-        self.df = pd.read_excel(self.path, engine="xlrd")
-        self.estandarizar_columnas(self.columnas_estandarizadas)
-        self.agregar_columnas_faltantes(self.columnas_esperadas)
-        self.df['Costo-Caja-Real'] = (self.df['Costo-Caja-Real'] * 1000).round(0).astype(int)
-        
-        # Calcular 'Precio-Efectivo' y 'Descuento'
-        try:
-            self.df["Precio-Efectivo"] = (
-                (self.df["Cantidad"] * self.df["Costo-Caja-Real"]) / (self.df["Cantidad"] + self.df["Cantidad-Obsequio"])
-            )
-            self.df["Descuento"] = (
-                (self.df["Cantidad-Obsequio"] / (self.df["Cantidad"] + self.df["Cantidad-Obsequio"])) * 100
-            )
-        except Exception as e:
-            raise ValueError(f"Error al calcular columnas de oferta: {e}")
+        #print(f"📥 Leyendo archivo: {self.path}")
 
-        # Validar columnas finales
-        self.validar_columnas(self.columnas_esperadas)
-        self.df['Precio-Efectivo'] = (self.df['Precio-Efectivo']).round(0).astype(int)
-        self.df['Descuento'] = (self.df['Descuento']/100).round(2).astype(float)
-        # print(f"\n📦 Vista previa final del archivo: {self.path}")
-        # print(self.df.tail(5))
-        # print(self.df.dtypes)
-        return self.df
+        try:
+            self.df = pd.read_excel(self.path, engine="xlrd")
+            #print("🧩 Columnas originales:", list(self.df.columns))
+
+            self.estandarizar_columnas(self.columnas_estandarizadas)
+            #print("✅ Columnas estandarizadas:", list(self.df.columns))
+
+            self.agregar_columnas_faltantes(self.columnas_esperadas)
+            #print("➕ Columnas faltantes agregadas (si aplicaba)")
+
+            self.df['costo_caja_real'] = (self.df['costo_caja_real'] * 1000).round(0).astype(int)
+            
+            self.df["precio_efectivo"] = (
+                (self.df["cantidad"] * self.df["costo_caja_real"]) / 
+                (self.df["cantidad"] + self.df["cantidad_obsequio"])
+            )
+            self.df["descuento"] = (
+                (self.df["cantidad_obsequio"] / 
+                (self.df["cantidad"] + self.df["cantidad_obsequio"])) * 100
+            )
+
+            self.validar_columnas(self.columnas_esperadas)
+            #print("columnas validadas")
+
+            self.df['precio_efectivo'] = self.df['precio_efectivo'].round(0).astype(int)
+            self.df['descuento'] = (self.df['descuento'] / 100).round(2).astype(float)
+
+            #print("📦 Vista previa del DataFrame:")
+            #print(self.df.head())
+            #print("📏 Registros:", len(self.df))
+            return self.df
+
+        except Exception as e:
+            #print(f"❌ Error en transformar(): {e}")
+            raise ValueError(f"Error al calcular columnas de oferta: {e}")
+            
+
+

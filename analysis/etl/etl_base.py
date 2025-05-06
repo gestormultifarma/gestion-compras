@@ -1,3 +1,5 @@
+# analysis\etl\etl_base.py
+
 from datetime import datetime
 from pathlib import Path
 from sqlalchemy import create_engine, text
@@ -42,11 +44,20 @@ class BaseETLRunner:
                     # --- Cargar a MySQL reemplazando la tabla ---
                     if self.loader:
                         self.loader.cargar_dataframe(df, clave)
+
+                        # validación de prueba
+                        # print(f"[DEBUG] carga {clave}")
+
                         self.validar_carga(clave)  # ✅ Validación después de cargar
+                        # revision de prueba
+                        # print(f"[DEBUG] Validación {clave}")
+
 
                 else:
+                    mensaje = f"⚠️  DataFrame vacío o nulo para archivo: {archivo}"
                     if self.logger:
-                        self.logger.error(f"⚠️ DataFrame vacío o nulo para archivo: {archivo}")
+                        self.logger.error(mensaje)
+                    print(mensaje)  
 
             except Exception as e:
                 if self.logger:

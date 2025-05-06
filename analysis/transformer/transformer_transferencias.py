@@ -14,6 +14,6 @@ class TransformadorTransferencias(BaseTransformer):
         self.estandarizar_columnas(self.columnas_estandarizadas)
         self.agregar_columnas_faltantes(self.columnas_esperadas)
         self.validar_columnas(self.columnas_esperadas)
-        print(f"\n📦 Vista previa final del archivo: {self.path}")
-        print(self.df.tail(5))
+        # print(f"\n📦 Vista previa final del archivo: {self.path}")
+        # print(self.df.tail(5))
         return self.df
