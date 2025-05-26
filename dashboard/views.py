@@ -1,8 +1,9 @@
+# dashboard\views.py
+
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
-from analysis.actualizador import procesar_archivos_excel  # TODO: Cambiar a la función correcta
 from analysis.etl_prueba import procesar_archivo_excel
 import os
 

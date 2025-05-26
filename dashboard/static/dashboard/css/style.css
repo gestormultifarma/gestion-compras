@@ -1,4 +1,3 @@
-
 /* style.css adaptado a la identidad de Droguerías Multifarma */
 
 body {
@@ -20,6 +19,10 @@ header {
 
 main {
   padding: 40px;
+  /* Para asegurar que el footer se empuje hacia abajo si el contenido es corto */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px - 75px); /* 100vh - altura_header - altura_footer (ajustar según sea necesario) */
 }
 
 canvas {
@@ -29,6 +32,14 @@ canvas {
 }
 
 /* Login */
+.login-page-wrapper { /* Nuevo wrapper para controlar mejor el layout de la página de login */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centra el contenido verticalmente si hay espacio */
+  flex-grow: 1; /* Para que ocupe el espacio disponible en main */
+}
+
 .login-container {
   background: white;
   padding: 40px;
@@ -36,7 +47,7 @@ canvas {
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 400px;
-  margin: 80px auto;
+  /* margin: 80px auto; lo quitamos para que .login-page-wrapper controle el centrado */
   animation: fadeInUp 0.8s ease-out;
 }
 
@@ -57,13 +68,25 @@ canvas {
   margin-bottom: 15px;
 }
 
-form input {
+form input { /* Este es un selector muy general, asegúrate que no afecte otros inputs no deseados */
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
+}
+
+.form-group { /* Para agrupar label e input en el login */
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
 }
 
 .btn-submit {
@@ -84,7 +107,8 @@ form input {
   background-color: #151a3c;
 }
 
-button {
+/* Estilo general para botones, si .btn-submit es específico del login */
+/* button {
   width: 100%;
   background-color: #283375;
   color: white;
@@ -97,7 +121,10 @@ button {
 
 button:hover {
   background-color: #151a3c;
-}
+} */
+/* Comentado porque .btn-submit y .btn-update ya tienen estilos específicos.
+   Si tienes otros botones genéricos, puedes descomentarlo y ajustarlo. */
+
 
 footer {
   background-color: #f5f5f5;
@@ -106,6 +133,8 @@ footer {
   font-size: 0.9rem;
   color: #555;
   border-top: 1px solid #ddd;
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+  box-sizing: border-box;
 }
 
 /* Layout */
@@ -157,7 +186,7 @@ footer {
 
 /* Enlaces y botones */
 .menu-column a,
-.sidebar ul li a,
+/* .sidebar ul li a, */ /* Comentado si no tienes una clase .sidebar */
 .logout-link {
   text-decoration: none;
   color: #878787;
@@ -165,25 +194,29 @@ footer {
 }
 
 .menu-column a:hover,
-.sidebar ul li a:hover,
+/* .sidebar ul li a:hover, */
 .logout-link:hover {
   color: #283375;
 }
 
 .logout-link {
-  background-color: #d9534f;
-  padding: 6px 12px;
-  border-radius: 4px;
+  background-color: #d9534f; /* Rojo para logout */
+  color: white !important; /* Asegurar que el color de texto sea blanco */
+  padding: 8px 15px; /* Un poco más de padding */
+  border-radius: 5px; /* Consistente con otros botones */
   transition: background-color 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .logout-link:hover {
   background-color: #c9302c;
+  color: white !important;
 }
 
 /* Botón actualizar archivos */
 .update-button-container {
   margin-top: 20px;
+  margin-bottom: 20px; /* Añadido para espaciado */
 }
 
 .btn-update {
@@ -195,16 +228,18 @@ footer {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease; /* Añadido transition para bg */
 }
 
 .btn-update:hover {
   transform: scale(1.05);
+  background-color: #151a3c; /* Oscurecer al pasar el mouse */
 }
 
 .btn-update:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  background-color: #5a629e; /* Color un poco diferente para deshabilitado */
 }
 
 /* Input con ícono */
@@ -242,3 +277,39 @@ footer {
     transform: translateY(0);
   }
 }
+
+/* --- INICIO ESTILOS BOTÓN PARAMETRIZACIÓN --- */
+.admin-link-container {
+  margin-top: 25px; /* Espacio después del formulario de login */
+  padding-top: 20px; /* Espacio antes del botón */
+  border-top: 1px solid #e0e0e0; /* Línea separadora sutil */
+  text-align: center; /* Centrar el botón/enlace */
+}
+
+.admin-link-container-outside { /* Si decides ponerlo fuera del login-container */
+    text-align: center;
+    margin: 30px auto; /* Centrado y con margen vertical */
+    width: 100%;
+    max-width: 400px; /* Coincide con el ancho del login-container */
+}
+
+.btn-admin-login {
+  display: inline-block;
+  padding: 10px 20px; /* Similar a otros botones */
+  background-color: #6c757d; /* Un color gris neutro o secundario */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-admin-login:hover {
+  background-color: #5a6268; /* Un gris más oscuro */
+  color: white;
+}
+/* --- FIN ESTILOS BOTÓN PARAMETRIZACIÓN --- */

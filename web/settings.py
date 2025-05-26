@@ -1,3 +1,6 @@
+# web\settings.py
+
+
 """
 Django settings for web project.
 
@@ -12,6 +15,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,8 +82,15 @@ WSGI_APPLICATION = 'web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'gestion_compras',         # El nombre de tu base de datos
+        'USER': 'root',       # Tu usuario de MySQL
+        'PASSWORD': 'Multifarma123*',  # Tu contraseña de MySQL
+        'HOST': 'localhost',              # O la IP/host de tu servidor MySQL
+        'PORT': '3306',                   # O el puerto de tu servidor MySQL
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'", # Opciones comunes
+        },
     }
 }
 
@@ -128,5 +140,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard:inicio')
+LOGOUT_REDIRECT_URL = reverse_lazy('login')
