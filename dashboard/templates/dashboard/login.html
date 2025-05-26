@@ -1,3 +1,5 @@
+<!-- dashboard\templates\dashboard\login.html -->
+
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% load form_filters %}
@@ -6,6 +8,7 @@
 {% block header %}Gestión de Compras | Multifarma{% endblock %}
 
 {% block content %}
+<div class="login-page-wrapper">
 <div class="login-container">
   <h2>Inicio de Sesión</h2>
 
@@ -30,5 +33,15 @@
 
     <button type="submit" class="btn-submit">Ingresar</button>
   </form>
+
+  <div class="admin-link-container" style="text-align: center; margin-top: 20px;">
+      <a href="{% url 'admin:index' %}" class="btn-admin-login">Parametrización (Admin)</a>
+    </div>
+
 </div>
+</div>
+<div class="footer">
+
+</div>
+
 {% endblock %}

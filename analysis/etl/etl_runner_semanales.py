@@ -5,7 +5,6 @@ from analysis.extractor.extractor_semanales import ExtractorSemanales
 from analysis.transformer.transformer_semanales import TransformadorSemanales
 from analysis.etl.etl_base import BaseETLRunner
 from analysis.loader.loader_base import BaseLoader
-from analysis.loader.loader_semanales import LoaderSemanales
 from utils.logger_etl import LoggerETL
 
 warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')

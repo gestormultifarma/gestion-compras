@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module='openpyxl')
 def generar_clave_inventario(archivo):
     nombre_archivo = os.path.basename(archivo).replace('.xlsx', '').replace('.xls', '')
     nombre_punto, codigo, *_ = nombre_archivo.rsplit(' ', 2)
-    return f"stg_{nombre_punto}_{codigo}"
+    return f"stg_inventario_{nombre_punto}"
 
 
 def transformador(path):
@@ -39,4 +39,4 @@ if __name__ == '__main__':
     )
     runner.run()
 
-#prueba funcional: python -m analysis.etl.etl_runner_inventario
+#prueba funcional: python -m analysis.etl.etl_runner_inventario 

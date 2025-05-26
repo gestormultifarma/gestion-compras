@@ -27,7 +27,6 @@ if __name__ == "__main__":
     logger = LoggerETL("ETL Convenios")
     loader = BaseLoader(db_name="gestion_compras")
 
-
     runner = BaseETLRunner(
         directorio_raiz=directorio,
         extractor_func=extractor.extraer,
