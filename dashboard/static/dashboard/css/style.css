@@ -1,217 +1,315 @@
-/* style.css - Estilos para el dashboard */
+/* style.css adaptado a la identidad de Droguerías Multifarma */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  color: #000000;
 }
 
 header {
-    background-color: #003366;
-    color: white;
-    padding: 20px;
-    text-align: center;
+  background-color: #283375;
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 main {
-    padding: 40px;
+  padding: 40px;
+  /* Para asegurar que el footer se empuje hacia abajo si el contenido es corto */
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px - 75px); /* 100vh - altura_header - altura_footer (ajustar según sea necesario) */
 }
 
 canvas {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Login */
+.login-page-wrapper { /* Nuevo wrapper para controlar mejor el layout de la página de login */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centra el contenido verticalmente si hay espacio */
+  flex-grow: 1; /* Para que ocupe el espacio disponible en main */
+}
 
 .login-container {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 400px;
-    margin: 80px auto;
-    animation: fadeInUp 0.8s ease-out;
-  }
-  
-  .login-container h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #003366;
-  }
-  
-  form input {
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  button {
-    width: 100%;
-    background-color: #003366;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  button:hover {
-    background-color: #0055a5;
-  }
-  
+  background: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  /* margin: 80px auto; lo quitamos para que .login-page-wrapper controle el centrado */
+  animation: fadeInUp 0.8s ease-out;
+}
 
-  footer {
-    background-color: #f1f1f1;
-    padding: 15px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #555;
-    border-top: 1px solid #ddd;
-  }
-  
+.login-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #283375;
+}
 
-  .inicio-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    padding: 20px;
-  }
-  
-  .sidebar {
-    flex: 1;
-    min-width: 250px;
-    max-width: 300px;
-  }
-  
-  .sidebar h3 {
-    color: #003366;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  
-  .sidebar ul li {
-    margin-bottom: 10px;
-  }
-  
-  .sidebar ul li a {
-    text-decoration: none;
-    color: #003366;
-    font-weight: bold;
-  }
-  
-  .sidebar ul li a:hover {
-    text-decoration: underline;
-  }
-  
-  .calendar {
-    flex: 3;
-    min-width: 300px;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .inicio-container {
-      flex-direction: column;
-    }
-  }
-  
+.login-input {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
 
+form input { /* Este es un selector muy general, asegúrate que no afecte otros inputs no deseados */
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group { /* Para agrupar label e input en el login */
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.btn-submit {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  width: 100%;
+  background-color: #283375;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #151a3c;
+}
+
+/* Estilo general para botones, si .btn-submit es específico del login */
+/* button {
+  width: 100%;
+  background-color: #283375;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #151a3c;
+} */
+/* Comentado porque .btn-submit y .btn-update ya tienen estilos específicos.
+   Si tienes otros botones genéricos, puedes descomentarlo y ajustarlo. */
+
+
+footer {
+  background-color: #f5f5f5;
+  padding: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  border-top: 1px solid #ddd;
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+  box-sizing: border-box;
+}
+
+/* Layout */
+.inicio-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 20px;
+  justify-content: space-between;
+}
+
+.menu-column {
+  flex: 1;
+  min-width: 240px;
+  max-width: 300px;
+}
+
+.menu-column h3 {
+  color: #283375;
+  margin-bottom: 10px;
+}
+
+.calendar-column {
+  flex: 2;
+  min-width: 300px;
+}
+
+@media (max-width: 768px) {
   .inicio-layout {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    padding: 20px;
-    justify-content: space-between;
+    flex-direction: column;
   }
-  
-  .menu-column {
-    flex: 1;
-    min-width: 240px;
-    max-width: 300px;
+}
+
+/* Logout */
+.logout-message {
+  background-color: #fff;
+  padding: 30px;
+  max-width: 500px;
+  margin: 80px auto;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.logout-message h2 {
+  color: #283375;
+  margin-bottom: 10px;
+}
+
+/* Enlaces y botones */
+.menu-column a,
+/* .sidebar ul li a, */ /* Comentado si no tienes una clase .sidebar */
+.logout-link {
+  text-decoration: none;
+  color: #878787;
+  font-weight: bold;
+}
+
+.menu-column a:hover,
+/* .sidebar ul li a:hover, */
+.logout-link:hover {
+  color: #283375;
+}
+
+.logout-link {
+  background-color: #d9534f; /* Rojo para logout */
+  color: white !important; /* Asegurar que el color de texto sea blanco */
+  padding: 8px 15px; /* Un poco más de padding */
+  border-radius: 5px; /* Consistente con otros botones */
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.logout-link:hover {
+  background-color: #c9302c;
+  color: white !important;
+}
+
+/* Botón actualizar archivos */
+.update-button-container {
+  margin-top: 20px;
+  margin-bottom: 20px; /* Añadido para espaciado */
+}
+
+.btn-update {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #283375;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, background-color 0.3s ease; /* Añadido transition para bg */
+}
+
+.btn-update:hover {
+  transform: scale(1.05);
+  background-color: #151a3c; /* Oscurecer al pasar el mouse */
+}
+
+.btn-update:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #5a629e; /* Color un poco diferente para deshabilitado */
+}
+
+/* Input con ícono */
+.input-icon-group input {
+  padding-left: 35px;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 16px;
+}
+
+.input-icon-group input::placeholder {
+  color: #999;
+}
+
+/* Errores */
+.form-errors {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .menu-column h3 {
-    color: #003366;
-    margin-bottom: 10px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .menu-column ul {
-    list-style: none;
-    padding-left: 0;
-  }
-  
-  .menu-column li {
-    margin-bottom: 12px;
-  }
-  
-  .menu-column a {
-    text-decoration: none;
-    color: #003366;
-    font-weight: bold;
-  }
-  
-  .menu-column a:hover {
-    text-decoration: underline;
-  }
-  
-  .calendar-column {
-    flex: 2;
-    min-width: 300px;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .inicio-layout {
-      flex-direction: column;
-    }
-  }
-  
-  .logout-message {
-    background-color: #fff;
-    padding: 30px;
-    max-width: 500px;
-    margin: 80px auto;
+}
+
+/* --- INICIO ESTILOS BOTÓN PARAMETRIZACIÓN --- */
+.admin-link-container {
+  margin-top: 25px; /* Espacio después del formulario de login */
+  padding-top: 20px; /* Espacio antes del botón */
+  border-top: 1px solid #e0e0e0; /* Línea separadora sutil */
+  text-align: center; /* Centrar el botón/enlace */
+}
+
+.admin-link-container-outside { /* Si decides ponerlo fuera del login-container */
     text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-  }
-  
-  .logout-message h2 {
-    color: #003366;
-    margin-bottom: 10px;
-  }
-  
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #003366;
-    color: white;
-  }
-  
-  .logout-link {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    background-color: #d9534f;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logout-link:hover {
-    background-color: #c9302c;
-  }
-  
+    margin: 30px auto; /* Centrado y con margen vertical */
+    width: 100%;
+    max-width: 400px; /* Coincide con el ancho del login-container */
+}
+
+.btn-admin-login {
+  display: inline-block;
+  padding: 10px 20px; /* Similar a otros botones */
+  background-color: #6c757d; /* Un color gris neutro o secundario */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-admin-login:hover {
+  background-color: #5a6268; /* Un gris más oscuro */
+  color: white;
+}
+/* --- FIN ESTILOS BOTÓN PARAMETRIZACIÓN --- */

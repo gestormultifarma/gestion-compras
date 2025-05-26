@@ -7,12 +7,10 @@
 
   <div class="menu-column">
     <h3>Menú</h3>
-    <ul>
-      <li><a href="#">Gestión de productos</a></li>
-      <li><a href="#">Reportes</a></li>
-      <li><a href="#">Usuarios</a></li>
-      <li><a href="#">Configuración</a></li>
-    </ul>
+
+    <div class="update-button-container">
+      <button class="btn-update" onclick="actualizarArchivos()">🔄 Actualizar Archivos</button>
+    </div>
   </div>
 
   <div class="calendar-column">
@@ -24,4 +22,27 @@
   </div>
 
 </div>
+
+<!-- Script para manejar la lógica del botón -->
+<script>
+function actualizarArchivos() {
+  const boton = document.querySelector('.btn-update');
+  boton.disabled = true;
+  boton.innerText = "⏳ Actualizando...";
+
+  fetch('/actualizar-archivos/')
+    .then(res => res.json())
+    .then(data => {
+      alert(data.mensaje);
+      boton.disabled = false;
+      boton.innerText = "🔄 Actualizar Archivos";
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Ocurrió un error al actualizar.");
+      boton.disabled = false;
+      boton.innerText = "🔄 Actualizar Archivos";
+    });
+}
+</script>
 {% endblock %}

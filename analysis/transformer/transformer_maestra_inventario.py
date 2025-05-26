@@ -1,0 +1,106 @@
+# analysis\transformer\transformer_maestra_inventario.py
+
+from analysis.transformer.transformer_base import BaseTransformer
+import pandas as pd
+
+class TransformadorMaestraInventario(BaseTransformer):
+    columnas_estandarizadas = {
+        "Cod Producto": "codigo",
+        "Nombre": "nombre",
+        "Nombre Corto": "nombre_corto",
+        "Tarifa": "tarifa",
+        "Contenido Interno Caja": "contenido_caja",
+        "Contenido Interno Blister": "contenido_blister",
+        "Contenido Interno Unidad": "contenido_unidad",
+        "Fecha Activacion": "fecha_activacion",
+        "Costo": "costo",
+        "Costo Promedio": "costo_promedio",
+        "Costo Descuento": "costo_descuento",
+        "Costo Cargue": "costo_cargue",
+        "Valor Caja Contado": "valor_caja_contado",
+        "Valor Blister Contado": "valor_blister_contado",
+        "Valor Unidad Contado": "valor_unidad_contado",
+        "Valor Caja Credito": "valor_caja_credito",
+        "Valor Blister Credito": "valor_blister_credito",
+        "Valor Unidad Credito": "valor_unidad_credito",
+        "Valor Caja Otros": "valor_caja_otros",
+        "Valor Blister Otros": "valor_blister_otros",
+        "Valor Unidad Otros": "valor_unidad_otros",
+        "Valor Anterior": "valor_anterior",
+        "Valor Activacion": "valor_activacion",
+        "Grupo I": "grupo_i",
+        "Grupo II": "grupo_ii",
+        "Grupo III": "grupo_iii",
+        "Grupo IV": "grupo_iv",
+        "Grupo V": "grupo_v",
+        "Grupo VI": "grupo_vi",
+        "Stock Minimo Caja": "stock_minimo_caja",
+        "Stock Maximo Caja": "stock_maximo_caja",
+        "Stock Minimo Blister": "stock_minimo_blister",
+        "Stock Maximo Blister": "stock_maximo_blister",
+        "Stock Minimo Unidad": "stock_minimo_unidad",
+        "Stock Maximo Unidad": "stock_maximo_unidad",
+        "Inventario Caja": "inventario_caja",
+        "Inventario Blister": "inventario_blister",
+        "Inventario Unidad": "inventario_unidad",
+        "Inventario Caja Separado": "inventario_caja_separado",
+        "Inventario Blister Separado": "inventario_blister_separado",
+        "Inventario Unidad Separado": "inventario_unidad_separado",
+        "Unidad": "unidad",
+        "Cantidad Total": "cantidad_total",
+        "Tipo Producto": "tipo_producto",
+        "Ubicacion": "ubicacion",
+        "Comision Venta": "comision_venta",
+        "Fecha Compra": "fecha_compra",
+        "Proveedor": "proveedor",
+        "Porce Utili Caja Contado": "porce_utili_caja_contado",
+        "Porce Utili Blister Contado": "porce_utili_blister_contado",
+        "Porce Utili Unidad Contado": "porce_utili_unidad_contado",
+        "Porce Utili Caja Credito": "porce_utili_caja_credito",
+        "Porce Utili Blister Credito": "porce_utili_blister_credito",
+        "Porce Utili Unidad Credito": "porce_utili_unidad_credito",
+        "Porce Utili Caja Otros": "porce_utili_caja_otros",
+        "Porce Utili Blister Otros": "porce_utili_blister_otros",
+        "Porce Utili Unidad Otros": "porce_utili_unidad_otros",
+        "Clasificacion": "clasificacion",
+        "Componente": "componente",
+        "Precio Abierto Maximo": "precio_abierto_maximo",
+        "Precio Abierto Minimo": "precio_abierto_minimo",
+        "Descuento Precio Abierto": "descuento_precio_abierto",
+        "Tiempo Reposicion": "tiempo_reposicion",
+        "Sustituto": "sustituto",
+        "Fecha Venta": "fecha_venta",
+        "Mensaje": "mensaje",
+        "Cod Farmacia": "cod_farmacia",
+        "Bonificacion": "bonificacion",
+        "Descuento": "descuento",
+        "Porcentaje Descuento": "porcentaje_descuento",
+        "Precio Abierto": "precio_abierto",
+        "Control Inventario Mes": "control_inventario_mes",
+        "Control Inventario Dia": "control_inventario_dia",
+        "Invenario Multiple": "inventario_multiple",
+        "Estado": "estado",
+        "Rotacion": "rotacion",
+        "Mensaje Venta": "mensaje_venta",
+        "Autoretencion": "autoretencion",
+        "Fecha Actualizacion": "fecha_actualizacion",
+        "Fecha Vencimiento": "fecha_vencimiento",
+        "Tipo Tarifa Iva": "tipo_tarifa_iva",
+        "ID_Sucursal": "id_sucursal",
+        "Fecha Inv Aleatorio": "fecha_inv_aleatorio",
+        "Tarifa Impuesto Consumo": "tarifa_impuesto_consumo",
+        "Maneja Impuesto Consumo Bolsas": "maneja_impuesto_consumo_bolsas",
+        "Año_Icui": "año_icui",
+        "%_Icui": "porcentaje_icui"
+    }
+
+    columnas_esperadas = list(columnas_estandarizadas.values())
+
+    def transformar(self):
+        self.df = pd.read_excel(self.path, engine="openpyxl")
+        self.estandarizar_columnas(self.columnas_estandarizadas)
+        self.agregar_columnas_faltantes(self.columnas_esperadas)
+        self.validar_columnas(self.columnas_esperadas)
+        # print(f"\n📦 Vista previa final del archivo: {self.path}")
+        # print(self.df.tail(5))
+        return self.df

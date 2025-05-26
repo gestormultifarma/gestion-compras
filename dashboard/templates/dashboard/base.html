@@ -1,3 +1,6 @@
+<!-- dashboard\templates\dashboard\base.html -->
+
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
@@ -7,6 +10,7 @@
 
   <!-- Favicon -->
   <link rel="icon" href="{% static 'dashboard/favicon.ico' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -18,7 +22,7 @@
     </div>
     <div class="header-right">
       {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="logout-link">Cerrar sesión</a>
+        <a href="{% url 'dashboard:logout' %}" class="logout-link">Cerrar sesión</a>
       {% endif %}
     </div>
   </header>
